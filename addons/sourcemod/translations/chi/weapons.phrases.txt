@@ -2,11 +2,11 @@
 {
 	"WSMenuTitle"
 	{
-		"chi"	"武器皮肤菜单"
+		"chi"	"皮肤设置菜单"
 	}
 	"ChooseKnife"
 	{
-		"chi"	"★ 更换您的刀具 ★"
+		"chi"	"★ 更换近战武器 ★"
 	}
 	"ConfigAllWeapons"
 	{
@@ -14,7 +14,7 @@
 	}
 	"KnifeMenuTitle"
 	{
-		"chi"	"★ 选择您的刀具 ★"
+		"chi"	"★ 选择你的刀具 ★"
 	}
 	"AllWeaponsMenuTitle"
 	{
@@ -26,7 +26,7 @@
 	}
 	"Decrease"
 	{
-		"chi"	"减少 %d%%"
+		"chi"	"降低 %d%%"
 	}
 	"NameTagColor"
 	{
@@ -34,11 +34,11 @@
 	}
 	"NameTagDisabled"
 	{
-		"chi"	"名称标签已禁用"
+		"chi"	"名称标签已禁用。"
 	}
 	"ChooseLanguage"
 	{
-		"chi"	"请选择皮肤名称显示语言："
+		"chi"	"请选择皮肤显示语言："
 	}
 	"ChooseColor"
 	{
@@ -56,19 +56,19 @@
 	{
 		"chi"	"随机"
 	}
-	"Black"
+	"黑"
 	{
 		"chi"	"黑"
 	}
-	"Red"
+	"红"
 	{
 		"chi"	"红"
 	}
-	"Green"
+	"绿"
 	{
 		"chi"	"绿"
 	}
-	"Blue"
+	"蓝"
 	{
 		"chi"	"蓝"
 	}
@@ -78,7 +78,7 @@
 	}
 	"OwnKnife"
 	{
-		"chi"	"★ 您自己的刀"
+		"chi"	"★ 你自己的刀"
 	}
 	"SetSkin"
 	{
@@ -90,7 +90,7 @@
 	}
 	"StatTrak"
 	{
-		"chi"	"StatTrak™："
+		"chi"	"StatTrak™: "
 	}
 	"SetNameTag"
 	{
@@ -302,7 +302,7 @@
 	}
 	"weapon_knife"
 	{
-		"chi"	"恐怖分子默认刀"
+		"chi"	"反恐精英 Eickhorn RECONDO IV"
 	}
 	"ChangeNameTag"
 	{
@@ -335,5 +335,53 @@
 	"NameTagSuccess"
 	{
 		"chi"	"名称标签已设置"
+	}
+	"AllSkins"
+	{
+		"chi"	"Skin From All"
+	}
+	"AllSkinsSub"
+	{
+		"chi"	"Skins for: %s"
+	}
+	"SeedTitle"
+	{
+		"chi"	"图案模板： %i"
+	}
+	"SeedTitleNoSeed"
+	{
+		"chi"	"图案模板： ∞"
+	}
+	"SeedRandom"
+	{
+		"chi"	"使用随机图案模板编号"
+	}
+	"SeedManual"
+	{
+		"chi"	"手动设置图案模板编号"
+	}
+	"SeedSave"
+	{
+		"chi"	"保存当前图案模板编号"
+	}
+	"SeedInstruction"
+	{
+		"chi"	"请将你希望设置的图案模板编号输入至聊天框。如需取消，请输入 !cancel 。"
+	}
+	"SeedSuccess"
+	{
+		"chi"	"图案模板应用成功！"
+	}
+	"SeedCancelled"
+	{
+		"chi"	"图案模板设置中断。"
+	}
+	"SeedFailed"
+	{
+		"chi"	"图案模板编号无效 (0 - 8192)"
+	}
+	"SeedSaved"
+	{
+		"chi"	"图案模板编号已保存。"
 	}
 }
