@@ -693,7 +693,7 @@ Menu CreateSkinsMenu(int client, int index)
 	char infoTemp[32];
 
 	int max = menuWeapons[g_iClientLanguage[client]][index].ItemCount;
-	for(int i = 2; i <= max; i++)
+	for(int i = 2; i < max; i++)
 	{
 		menuWeapons[g_iClientLanguage[client]][index].GetItem(i, idTemp, sizeof(idTemp), _, infoTemp, sizeof(infoTemp));
 		menu.AddItem(idTemp, infoTemp);
