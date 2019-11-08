@@ -39,7 +39,7 @@ public int WeaponsMenuHandler(Menu menu, MenuAction action, int client, int sele
 				RefreshWeapon(client, index);
 				
 				DataPack pack;
-				CreateDataTimer(0.5, WeaponsMenuTimer, pack);
+				CreateDataTimer(0.1, WeaponsMenuTimer, pack);
 				pack.WriteCell(menu);
 				pack.WriteCell(GetClientUserId(client));
 				pack.WriteCell(GetMenuSelectionPosition());
@@ -238,7 +238,7 @@ public int FloatMenuHandler(Menu menu, MenuAction action, int client, int select
 						g_FloatTimer[client] = INVALID_HANDLE;
 					}
 					DataPack pack;
-					g_FloatTimer[client] = CreateDataTimer(1.0, FloatTimer, pack);
+					g_FloatTimer[client] = CreateDataTimer(0.1, FloatTimer, pack);
 					pack.WriteCell(GetClientUserId(client));
 					pack.WriteCell(g_iIndex[client]);
 					int menuTime;
@@ -260,7 +260,7 @@ public int FloatMenuHandler(Menu menu, MenuAction action, int client, int select
 						g_FloatTimer[client] = INVALID_HANDLE;
 					}
 					DataPack pack;
-					g_FloatTimer[client] = CreateDataTimer(1.0, FloatTimer, pack);
+					g_FloatTimer[client] = CreateDataTimer(0.1, FloatTimer, pack);
 					pack.WriteCell(GetClientUserId(client));
 					pack.WriteCell(g_iIndex[client]);
 					int menuTime;
@@ -729,7 +729,6 @@ public int SkinMenuHandler(Menu menu, MenuAction action, int client, int selecti
 				DataPack pack;
 				CreateDataTimer(0.1, SkinsMenuTimer, pack);
 				pack.WriteCell(GetClientUserId(client));
-				pack.WriteCell(index);
 				pack.WriteCell(GetMenuSelectionPosition());
 			}
 		}
@@ -762,8 +761,7 @@ public Action SkinsMenuTimer(Handle timer, DataPack pack)
 		int menuTime;
 		if((menuTime = GetRemainingGracePeriodSeconds(clientIndex)) >= 0)
 		{
-			Menu menu = CreateSkinsMenu(clientIndex, g_iSkinIndex[clientIndex]);
-			menu.DisplayAt(clientIndex, menuSelectionPosition, menuTime);
+			CreateSkinsMenu(clientIndex, g_iSkinIndex[clientIndex]).DisplayAt(clientIndex, menuSelectionPosition, menuTime);
 		}
 	}
 }
