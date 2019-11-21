@@ -472,31 +472,31 @@ void CreateMainTable(bool mysql, bool recreate = false)
 			knife_css_trak_count int(10) NOT NULL DEFAULT '0', 				\
 			knife_css_tag varchar(256) NOT NULL DEFAULT '', 				\
 			knife_css_seed int(10) NOT NULL DEFAULT '-1',					\
-			knife_skeleton int(4) NOT NULL DEFAULT '0', 					\
-			knife_skeleton_float decimal(3,2) NOT NULL DEFAULT '0.0',		\
-			knife_skeleton_trak int(1) NOT NULL DEFAULT '0', 				\
-			knife_skeleton_trak_count int(10)NOT NULL DEFAULT'0', ");
+			knife_cord int(4) NOT NULL DEFAULT '0', 						\
+			knife_cord_float decimal(3,2) NOT NULL DEFAULT '0.0',			\
+			knife_cord_trak int(1) NOT NULL DEFAULT '0', 					\
+			knife_cord_trak_count int(10) NOT NULL DEFAULT '0', 			\
+			knife_cord_tag varchar(256) NOT NULL DEFAULT '', ");
 	index += FormatEx(createQuery[index], sizeof(createQuery) - index, "	\
-			knife_skeleton_tag varchar(256) NOT NULL DEFAULT '', 			\
-			knife_skeleton_seed int(10) NOT NULL DEFAULT '-1',				\
-			knife_outdoor int(4) NOT NULL DEFAULT '0', 						\
-			knife_outdoor_float decimal(3,2) NOT NULL DEFAULT '0.0',		\
-			knife_outdoor_trak int(1) NOT NULL DEFAULT '0', 				\
-			knife_outdoor_trak_count int(10) NOT NULL DEFAULT '0', 			\
-			knife_outdoor_tag varchar(256) NOT NULL DEFAULT '', 			\
-			knife_outdoor_seed int(10) NOT NULL DEFAULT '-1',				\
+			knife_cord_seed int(10) NOT NULL DEFAULT '-1',					\
 			knife_canis int(4) NOT NULL DEFAULT '0', 						\
 			knife_canis_float decimal(3,2) NOT NULL DEFAULT '0.0',			\
 			knife_canis_trak int(1) NOT NULL DEFAULT '0', 					\
 			knife_canis_trak_count int(10) NOT NULL DEFAULT '0', 			\
 			knife_canis_tag varchar(256) NOT NULL DEFAULT '', 				\
 			knife_canis_seed int(10) NOT NULL DEFAULT '-1',					\
-			knife_cord int(4) NOT NULL DEFAULT '0', 						\
-			knife_cord_float decimal(3,2) NOT NULL DEFAULT '0.0',			\
-			knife_cord_trak int(1) NOT NULL DEFAULT '0', 					\
-			knife_cord_trak_count int(10) NOT NULL DEFAULT '0', 			\
-			knife_cord_tag varchar(256) NOT NULL DEFAULT '', 				\
-			knife_cord_seed int(10) NOT NULL DEFAULT '-1')");
+			knife_outdoor int(4) NOT NULL DEFAULT '0', 						\
+			knife_outdoor_float decimal(3,2) NOT NULL DEFAULT '0.0',		\
+			knife_outdoor_trak int(1) NOT NULL DEFAULT '0', 				\
+			knife_outdoor_trak_count int(10) NOT NULL DEFAULT '0', 			\
+			knife_outdoor_tag varchar(256) NOT NULL DEFAULT '', 			\
+			knife_outdoor_seed int(10) NOT NULL DEFAULT '-1',				\
+			knife_skeleton int(4) NOT NULL DEFAULT '0', 					\
+			knife_skeleton_float decimal(3,2) NOT NULL DEFAULT '0.0',		\
+			knife_skeleton_trak int(1) NOT NULL DEFAULT '0', 				\
+			knife_skeleton_trak_count int(10) NOT NULL DEFAULT '0', 		\
+			knife_skeleton_tag varchar(256) NOT NULL DEFAULT '', 			\
+			knife_skeleton_seed int(10) NOT NULL DEFAULT '-1')");
 	
 	if (mysql)
 	{
@@ -525,14 +525,14 @@ public void T_ReCreateMainTableCallback(Database database, DBResultSet results, 
 		
 		char migrateQuery[8192];
 
-		index += FormatEx(migrateQuery[index], sizeof(migrateQuery) - index, "																\
+		index += FormatEx(migrateQuery[index], sizeof(migrateQuery) - index, "																	\
 			INSERT INTO %sweapons (steamid, knife, awp, awp_float, awp_trak, awp_trak_count, awp_tag, ak47, ak47_float, 					\
 			ak47_trak, ak47_trak_count, ak47_tag, m4a1, m4a1_float, m4a1_trak, m4a1_trak_count, m4a1_tag, m4a1_silencer, 					\
 			m4a1_silencer_float, m4a1_silencer_trak, m4a1_silencer_trak_count, m4a1_silencer_tag, deagle, deagle_float, 					\
 			deagle_trak, deagle_trak_count, deagle_tag, usp_silencer, usp_silencer_float, usp_silencer_trak, 								\
 			usp_silencer_trak_count, usp_silencer_tag, hkp2000, hkp2000_float, hkp2000_trak, hkp2000_trak_count, 							\
 			hkp2000_tag, glock, glock_float, glock_trak, glock_trak_count, glock_tag, elite, elite_float, elite_trak, ", g_TablePrefix);
-		index += FormatEx(migrateQuery[index], sizeof(migrateQuery) - index, "																\
+		index += FormatEx(migrateQuery[index], sizeof(migrateQuery) - index, "																	\
 			elite_trak_count, elite_tag, p250, p250_float, p250_trak, p250_trak_count, p250_tag, cz75a, cz75a_float, 						\
 			cz75a_trak, cz75a_trak_count, cz75a_tag, fiveseven, fiveseven_float, fiveseven_trak, fiveseven_trak_count, 						\
 			fiveseven_tag, tec9, tec9_float, tec9_trak, tec9_trak_count, tec9_tag, revolver, revolver_float, revolver_trak, 				\
@@ -540,7 +540,7 @@ public void T_ReCreateMainTableCallback(Database database, DBResultSet results, 
 			xm1014_trak, xm1014_trak_count, xm1014_tag, mag7, mag7_float, mag7_trak, mag7_trak_count, mag7_tag, sawedoff, 					\
 			sawedoff_float, sawedoff_trak, sawedoff_trak_count, sawedoff_tag, m249, m249_float, m249_trak, m249_trak_count, 				\
 			m249_tag, negev, negev_float, negev_trak, negev_trak_count, negev_tag, mp9, mp9_float, mp9_trak, mp9_trak_count, ");
-		index += FormatEx(migrateQuery[index], sizeof(migrateQuery) - index, "																\
+		index += FormatEx(migrateQuery[index], sizeof(migrateQuery) - index, "																	\
 			mp9_tag, mac10, mac10_float, mac10_trak, mac10_trak_count, mac10_tag, mp7, mp7_float, mp7_trak, mp7_trak_count, 				\
 			mp7_tag, ump45, ump45_float, ump45_trak, ump45_trak_count, ump45_tag, p90, p90_float, p90_trak, p90_trak_count, 				\
 			p90_tag, bizon, bizon_float, bizon_trak, bizon_trak_count, bizon_tag, famas, famas_float, famas_trak, 							\
@@ -549,7 +549,7 @@ public void T_ReCreateMainTableCallback(Database database, DBResultSet results, 
 			sg556_float, sg556_trak, sg556_trak_count, sg556_tag, scar20, scar20_float, scar20_trak, scar20_trak_count, 					\
 			scar20_tag, g3sg1, g3sg1_float, g3sg1_trak, g3sg1_trak_count, g3sg1_tag, knife_karambit, knife_karambit_float, 					\
 			knife_karambit_trak, knife_karambit_trak_count, knife_karambit_tag, knife_m9_bayonet, knife_m9_bayonet_float, ");
-		index += FormatEx(migrateQuery[index], sizeof(migrateQuery) - index, "																\
+		index += FormatEx(migrateQuery[index], sizeof(migrateQuery) - index, "																	\
 			knife_m9_bayonet_trak, knife_m9_bayonet_trak_count, knife_m9_bayonet_tag, bayonet, bayonet_float, bayonet_trak, 				\
 			bayonet_trak_count, bayonet_tag, knife_survival_bowie, knife_survival_bowie_float, knife_survival_bowie_trak, 					\
 			knife_survival_bowie_trak_count, knife_survival_bowie_tag, knife_butterfly, knife_butterfly_float, knife_butterfly_trak, 		\
@@ -557,18 +557,13 @@ public void T_ReCreateMainTableCallback(Database database, DBResultSet results, 
 			knife_flip_tag, knife_push, knife_push_float, knife_push_trak, knife_push_trak_count, knife_push_tag, knife_tactical, 			\
 			knife_tactical_float, knife_tactical_trak, knife_tactical_trak_count, knife_tactical_tag, knife_falchion, 						\
 			knife_falchion_float, knife_falchion_trak, knife_falchion_trak_count, knife_falchion_tag, knife_gut, knife_gut_float, ");
-		index += FormatEx(migrateQuery[index], sizeof(migrateQuery) - index, "																\
+		index += FormatEx(migrateQuery[index], sizeof(migrateQuery) - index, "																	\
 			knife_gut_trak, knife_gut_trak_count, knife_gut_tag, knife_ursus, knife_ursus_float, knife_ursus_trak, 							\
 			knife_ursus_trak_count, knife_ursus_tag, knife_gypsy_jackknife, knife_gypsy_jackknife_float, knife_gypsy_jackknife_trak, 		\
 			knife_gypsy_jackknife_trak_count, knife_gypsy_jackknife_tag, knife_stiletto, knife_stiletto_float, knife_stiletto_trak, 		\
 			knife_stiletto_trak_count, knife_stiletto_tag, knife_widowmaker, knife_widowmaker_float, knife_widowmaker_trak, 				\
 			knife_widowmaker_trak_count, knife_widowmaker_tag, mp5sd, mp5sd_float, mp5sd_trak, mp5sd_trak_count, mp5sd_tag, knife_css, 		\
-			knife_css_float, knife_css_trak, knife_css_trak_count, knife_css_tag, knife_css_seed, ");
-		index += FormatEx(migrateQuery[index], sizeof(migrateQuery) - index, "																\
-			knife_skeleton, knife_skeleton_float, knife_skeleton_trak, knife_skeleton_trak_count, knife_skeleton_tag, knife_skeleton_seed,	\
-			knife_outdoor, knife_outdoor_float, knife_outdoor_trak, knife_outdoor_trak_count, knife_outdoor_tag, knife_outdoor_seed,		\
-			knife_canis, knife_canis_float, knife_canis_trak, knife_canis_trak_count, knife_canis_tag, knife_canis_seed,					\
-			knife_cord, knife_cord_float, knife_cord_trak, knife_cord_trak_count, knife_cord_tag, knife_cord_seed)							\
+			knife_css_float, knife_css_trak, knife_css_trak_count, knife_css_tag, knife_css_seed)											\
 			SELECT * FROM %sweapons_tmp", g_TablePrefix);
 		
 		db.Query(T_MigrateOldDataCallback, migrateQuery, mysql, DBPrio_High);
@@ -600,6 +595,18 @@ public void T_DropOldTableCallback(Database database, DBResultSet results, const
 	else
 	{
 		LogMessage("%s Old table has been dropped successfully", (mysql ? "MySQL" : "SQLite"));
+		if(++g_iDatabaseState > 1)
+		{
+			LogMessage("%s DB connection successful", (mysql ? "MySQL" : "SQLite"));
+			for(int i = 1; i <= MaxClients; i++)
+			{
+				if(IsClientInGame(i) && IsClientAuthorized(i))
+				{
+					OnClientPostAdminCheck(i);
+				}
+			}
+			DeleteInactivePlayerData();
+		}
 	}
 }
 
@@ -611,18 +618,8 @@ public void T_CreateMainTableCallback(Database database, DBResultSet results, co
 	}
 	else
 	{
-		AddWeaponColumns("knife_ursus", false);
-		AddWeaponColumns("knife_gypsy_jackknife", false);
-		AddWeaponColumns("knife_stiletto", false);
-		AddWeaponColumns("knife_widowmaker", false);
-		AddWeaponColumns("mp5sd", false);
-		AddWeaponColumns("knife_css");
-		AddWeaponColumns("knife_skeleton");
-		AddWeaponColumns("knife_outdoor");
-		AddWeaponColumns("knife_canis");
-		AddWeaponColumns("knife_cord");
-
-		addSeedColumns(mysql);
+		g_iMigrationStep = 0;
+		AddWeaponColumns(mysql, "knife_ursus", false);
 		
 		char createQuery[512];
 		Format(createQuery, sizeof(createQuery), "			\
@@ -659,7 +656,7 @@ public void T_SeedColumnCallback(Database database, DBResultSet results, const c
 		
 		if (mysql)
 		{
-			index += FormatEx(seedColumnsQuery[index], sizeof(seedColumnsQuery) - index, "									\
+			index += FormatEx(seedColumnsQuery[index], sizeof(seedColumnsQuery) - index, "										\
 				ALTER TABLE %sweapons																						\
 					ADD COLUMN awp_seed int(10) NOT NULL DEFAULT '-1' AFTER awp_tag,										\
 					ADD COLUMN ak47_seed int(10) NOT NULL DEFAULT '-1' AFTER ak47_tag,										\
@@ -682,7 +679,7 @@ public void T_SeedColumnCallback(Database database, DBResultSet results, const c
 					ADD COLUMN m249_seed int(10) NOT NULL DEFAULT '-1' AFTER m249_tag,										\
 					ADD COLUMN negev_seed int(10) NOT NULL DEFAULT '-1' AFTER negev_tag,									\
 					ADD COLUMN mp9_seed int(10) NOT NULL DEFAULT '-1' AFTER mp9_tag, ", g_TablePrefix);
-			index += FormatEx(seedColumnsQuery[index], sizeof(seedColumnsQuery) - index, "									\
+			index += FormatEx(seedColumnsQuery[index], sizeof(seedColumnsQuery) - index, "										\
 					ADD COLUMN mac10_seed int(10) NOT NULL DEFAULT '-1' AFTER mac10_tag,									\
 					ADD COLUMN mp7_seed int(10) NOT NULL DEFAULT '-1' AFTER mp7_tag,										\
 					ADD COLUMN ump45_seed int(10) NOT NULL DEFAULT '-1' AFTER ump45_tag,									\
@@ -704,18 +701,12 @@ public void T_SeedColumnCallback(Database database, DBResultSet results, const c
 					ADD COLUMN knife_push_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_push_tag,							\
 					ADD COLUMN knife_tactical_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_tactical_tag,					\
 					ADD COLUMN knife_falchion_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_falchion_tag,					\
-					ADD COLUMN knife_gut_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_gut_tag, ");
-			index += FormatEx(seedColumnsQuery[index], sizeof(seedColumnsQuery) - index, "									\
+					ADD COLUMN knife_gut_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_gut_tag,							\
 					ADD COLUMN knife_ursus_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_ursus_tag,						\
 					ADD COLUMN knife_gypsy_jackknife_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_gypsy_jackknife_tag,	\
 					ADD COLUMN knife_stiletto_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_stiletto_tag,					\
 					ADD COLUMN knife_widowmaker_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_widowmaker_tag,				\
-					ADD COLUMN mp5sd_seed int(10) NOT NULL DEFAULT '-1' AFTER mp5sd_tag,									\
-					ADD COLUMN knife_css_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_css_tag								\
-					ADD COLUMN knife_skeleton_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_skeleton_tag					\
-					ADD COLUMN knife_outdoor_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_outdoor_tag						\
-					ADD COLUMN knife_canis_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_canis_tag							\
-					ADD COLUMN knife_cord_seed int(10) NOT NULL DEFAULT '-1' AFTER knife_cord_tag");
+					ADD COLUMN mp5sd_seed int(10) NOT NULL DEFAULT '-1' AFTER mp5sd_tag");
 			
 			db.Query(T_SeedConfirmationCallback, seedColumnsQuery, mysql, DBPrio_High);
 		}
@@ -724,6 +715,21 @@ public void T_SeedColumnCallback(Database database, DBResultSet results, const c
 			char renameQuery[512];
 			Format(renameQuery, sizeof(renameQuery), "ALTER TABLE %sweapons RENAME TO %sweapons_tmp", g_TablePrefix, g_TablePrefix);
 			db.Query(T_RenameCallback, renameQuery, mysql, DBPrio_High);
+		}
+	}
+	else
+	{
+		if(++g_iDatabaseState > 1)
+		{
+			LogMessage("%s DB connection successful", (mysql ? "MySQL" : "SQLite"));
+			for(int i = 1; i <= MaxClients; i++)
+			{
+				if(IsClientInGame(i) && IsClientAuthorized(i))
+				{
+					OnClientPostAdminCheck(i);
+				}
+			}
+			DeleteInactivePlayerData();
 		}
 	}
 }
@@ -749,51 +755,83 @@ public void T_SeedConfirmationCallback(Database database, DBResultSet results, c
 	else
 	{
 		LogMessage("Successfully created seed columns");
+		if(++g_iDatabaseState > 1)
+		{
+			LogMessage("%s DB connection successful", (mysql ? "MySQL" : "SQLite"));
+			for(int i = 1; i <= MaxClients; i++)
+			{
+				if(IsClientInGame(i) && IsClientAuthorized(i))
+				{
+					OnClientPostAdminCheck(i);
+				}
+			}
+			DeleteInactivePlayerData();
+		}
 	}
 }
 
-void AddWeaponColumns(const char[] weapon, bool seedColumn = true)
+void AddWeaponColumns(bool mysql, const char[] weapon, bool seedColumn = true)
 {
+	Transaction txn = new Transaction();
 	char query[512];
-	
-	SQL_LockDatabase(db);
-	
 	Format(query, sizeof(query), "ALTER TABLE %sweapons ADD %s int(4) NOT NULL DEFAULT '0'", g_TablePrefix, weapon);
-	SQL_FastQuery(db, query);
+	txn.AddQuery(query);
 	Format(query, sizeof(query), "ALTER TABLE %sweapons ADD %s_float decimal(3,2) NOT NULL DEFAULT '0.0'", g_TablePrefix, weapon);
-	SQL_FastQuery(db, query);
+	txn.AddQuery(query);
 	Format(query, sizeof(query), "ALTER TABLE %sweapons ADD %s_trak int(1) NOT NULL DEFAULT '0'", g_TablePrefix, weapon);
-	SQL_FastQuery(db, query);
+	txn.AddQuery(query);
 	Format(query, sizeof(query), "ALTER TABLE %sweapons ADD %s_trak_count int(10) NOT NULL DEFAULT '0'", g_TablePrefix, weapon);
-	SQL_FastQuery(db, query);
+	txn.AddQuery(query);
 	Format(query, sizeof(query), "ALTER TABLE %sweapons ADD %s_tag varchar(256) NOT NULL DEFAULT ''", g_TablePrefix, weapon);
-	SQL_FastQuery(db, query);
+	txn.AddQuery(query);
 	if (seedColumn)
 	{
 		Format(query, sizeof(query), "ALTER TABLE %sweapons ADD %s_seed int(10) NOT NULL DEFAULT '-1'", g_TablePrefix, weapon);
-		SQL_FastQuery(db, query);
+		txn.AddQuery(query);
 	}
-	
-	SQL_UnlockDatabase(db);
+	db.Execute(txn, Txn_OnSucess, Txn_OnFail, mysql);
+}
+
+public void Txn_OnSucess(Database database, bool mysql, int numQueries, DBResultSet[] results, any[] queryData)
+{
+	if(++g_iMigrationStep >= sizeof(g_MigrationWeapons))
+	{
+		addSeedColumns(mysql);
+	}
+	else
+	{
+		AddWeaponColumns(mysql, g_MigrationWeapons[g_iMigrationStep], g_iMigrationStep > 4);
+	}
+}
+
+public void Txn_OnFail(Database database, bool mysql, int numQueries, const char[] error, int failIndex, any[] queryData)
+{
+	if(++g_iMigrationStep >= sizeof(g_MigrationWeapons))
+	{
+		addSeedColumns(mysql);
+	}
+	else
+	{
+		AddWeaponColumns(mysql, g_MigrationWeapons[g_iMigrationStep], g_iMigrationStep > 4);
+	}
 }
 
 public void T_CreateTimestampTableCallback(Database database, DBResultSet results, const char[] error, bool mysql)
 {
 	if (results == null)
 	{
-		LogMessage("%s DB connection successful", (mysql ? "MySQL" : "SQLite"));
-		for(int i = 1; i <= MaxClients; i++)
+		if(++g_iDatabaseState > 1)
 		{
-			if(IsClientInGame(i))
+			LogMessage("%s DB connection successful", (mysql ? "MySQL" : "SQLite"));
+			for(int i = 1; i <= MaxClients; i++)
 			{
-				OnClientPutInServer(i);
-				if(IsClientAuthorized(i))
+				if(IsClientInGame(i) && IsClientAuthorized(i))
 				{
 					OnClientPostAdminCheck(i);
 				}
 			}
+			DeleteInactivePlayerData();
 		}
-		DeleteInactivePlayerData();
 	}
 	else
 	{
@@ -814,19 +852,18 @@ public void T_InsertTimestampsCallback(Database database, DBResultSet results, c
 	}
 	else
 	{
-		LogMessage("%s DB connection successful", (mysql ? "MySQL" : "SQLite"));
-		for(int i = 1; i <= MaxClients; i++)
+		if(++g_iDatabaseState > 1)
 		{
-			if(IsClientInGame(i))
+			LogMessage("%s DB connection successful", (mysql ? "MySQL" : "SQLite"));
+			for(int i = 1; i <= MaxClients; i++)
 			{
-				OnClientPutInServer(i);
-				if(IsClientAuthorized(i))
+				if(IsClientInGame(i) && IsClientAuthorized(i))
 				{
 					OnClientPostAdminCheck(i);
 				}
 			}
+			DeleteInactivePlayerData();
 		}
-		DeleteInactivePlayerData();
 	}
 }
 
