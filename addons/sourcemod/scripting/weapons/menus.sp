@@ -115,6 +115,14 @@ public int WeaponMenuHandler(Menu menu, MenuAction action, int client, int selec
 						menuWeapons[g_iClientLanguage[client]][g_iIndex[client]].Display(client, menuTime);
 					}
 				}
+				else if(StrEqual(buffer, "allskins"))	
+				{	
+					int menuTime;	
+					if((menuTime = GetRemainingGracePeriodSeconds(client)) >= 0)	
+					{	
+						CreateAllSkinsMenu(client).Display(client, menuTime);	
+					}	
+				}
 				else if(StrEqual(buffer, "float"))
 				{
 					int menuTime;
