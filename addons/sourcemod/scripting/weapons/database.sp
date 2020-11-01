@@ -19,11 +19,11 @@ void GetPlayerData(int client)
 {
 	char steamid[32];
 	if(GetClientAuthId(client, AuthId_Steam2, steamid, sizeof(steamid), true))
-    {
-        char query[255];
-        FormatEx(query, sizeof(query), "SELECT * FROM %sweapons WHERE steamid = '%s'", g_TablePrefix, steamid);
-        db.Query(T_GetPlayerDataCallback, query, GetClientUserId(client));
-    }
+	{
+		char query[255];
+		FormatEx(query, sizeof(query), "SELECT * FROM %sweapons WHERE steamid = '%s'", g_TablePrefix, steamid);
+		db.Query(T_GetPlayerDataCallback, query, GetClientUserId(client));
+	}
 }
 
 public void T_GetPlayerDataCallback(Database database, DBResultSet results, const char[] error, int userid)
@@ -39,24 +39,14 @@ public void T_GetPlayerDataCallback(Database database, DBResultSet results, cons
 		{
 			char steamid[32];
 			if(GetClientAuthId(clientIndex, AuthId_Steam2, steamid, sizeof(steamid), true))
-            {
-                char query[255];
-                FormatEx(query, sizeof(query), "INSERT INTO %sweapons (steamid) VALUES ('%s')", g_TablePrefix, steamid);
-                DataPack pack = new DataPack();
-                pack.WriteString(steamid);
-                pack.WriteString(query);
-                db.Query(T_InsertCallback, query, pack);
-                for(int i = 0; i < sizeof(g_WeaponClasses); i++)
-                {
-                    g_iSkins[clientIndex][i] = 0;
-                    g_iStatTrak[clientIndex][i] = 0;
-                    g_iStatTrakCount[clientIndex][i] = 0;
-                    g_NameTag[clientIndex][i] = "";
-                    g_fFloatValue[clientIndex][i] = 0.0;
-                    g_iWeaponSeed[clientIndex][i] = -1;
-                }
-                g_iKnife[clientIndex] = 0;
-            }
+			{
+				char query[255];
+				FormatEx(query, sizeof(query), "INSERT INTO %sweapons (steamid) VALUES ('%s')", g_TablePrefix, steamid);
+				DataPack pack = new DataPack();
+				pack.WriteString(steamid);
+				pack.WriteString(query);
+				db.Query(T_InsertCallback, query, pack);
+			}
 		}
 		else
 		{
@@ -75,13 +65,13 @@ public void T_GetPlayerDataCallback(Database database, DBResultSet results, cons
 			}
 			char steamid[32];
 			if(GetClientAuthId(clientIndex, AuthId_Steam2, steamid, sizeof(steamid), true))
-            {
-                char query[255];
-                FormatEx(query, sizeof(query), "REPLACE INTO %sweapons_timestamps (steamid, last_seen) VALUES ('%s', %d)", g_TablePrefix, steamid, GetTime());
-                DataPack pack = new DataPack();
-                pack.WriteString(query);
-                db.Query(T_TimestampCallback, query, pack);
-            }
+			{
+				char query[255];
+				FormatEx(query, sizeof(query), "REPLACE INTO %sweapons_timestamps (steamid, last_seen) VALUES ('%s', %d)", g_TablePrefix, steamid, GetTime());
+				DataPack pack = new DataPack();
+				pack.WriteString(query);
+				db.Query(T_TimestampCallback, query, pack);
+			}
 		}
 	}
 }
@@ -124,13 +114,13 @@ void UpdatePlayerData(int client, char[] updateFields)
 {
 	char steamid[32];
 	if(GetClientAuthId(client, AuthId_Steam2, steamid, sizeof(steamid), true))
-    {
-        char query[1024];
-        FormatEx(query, sizeof(query), "UPDATE %sweapons SET %s WHERE steamid = '%s'", g_TablePrefix, updateFields, steamid);
-        DataPack pack = new DataPack();
-        pack.WriteString(query);
-        db.Query(T_UpdatePlayerDataCallback, query, pack);
-    }
+	{
+		char query[1024];
+		FormatEx(query, sizeof(query), "UPDATE %sweapons SET %s WHERE steamid = '%s'", g_TablePrefix, updateFields, steamid);
+		DataPack pack = new DataPack();
+		pack.WriteString(query);
+		db.Query(T_UpdatePlayerDataCallback, query, pack);
+	}
 }
 
 public void T_UpdatePlayerDataCallback(Database database, DBResultSet results, const char[] error, DataPack pack)

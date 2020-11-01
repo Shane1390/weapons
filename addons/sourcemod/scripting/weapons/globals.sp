@@ -67,9 +67,6 @@ bool g_bEnableNameTag;
 ConVar g_Cvar_EnableStatTrak;
 bool g_bEnableStatTrak;
 
-ConVar g_Cvar_EnableAllSkins;
-bool g_bEnableAllSkins;
-
 ConVar g_Cvar_EnableSeed;
 bool g_bEnableSeed;
 
@@ -90,9 +87,7 @@ char g_NameTag[MAXPLAYERS+1][sizeof(g_WeaponClasses)][128];
 float g_fFloatValue[MAXPLAYERS+1][sizeof(g_WeaponClasses)];
 
 int g_iIndex[MAXPLAYERS+1] = { 0, ... };
-int g_iSkinIndex[MAXPLAYERS + 1] = { 0, ... };
 Handle g_FloatTimer[MAXPLAYERS+1] = { INVALID_HANDLE, ... };
-int g_iSteam32[MAXPLAYERS+1] = { 0, ... };
 
 bool g_bWaitingForNametag[MAXPLAYERS+1] = { false, ... };
 bool g_bWaitingForSeed[MAXPLAYERS+1] = { false, ... };
@@ -124,3 +119,6 @@ Menu menuWeapons[MAX_LANG][sizeof(g_WeaponClasses)];
 StringMap g_smWeaponIndex;
 StringMap g_smWeaponDefIndex;
 StringMap g_smLanguageIndex;
+
+GlobalForward g_hOnKnifeSelect_Pre;
+GlobalForward g_hOnKnifeSelect_Post;

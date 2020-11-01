@@ -20,6 +20,7 @@
 #include <sdkhooks>
 #include <cstrike>
 #include <PTaH>
+#include <weapons>
 
 #pragma semicolon 1
 #pragma newdecls required
@@ -31,15 +32,30 @@
 #include "weapons/database.sp"
 #include "weapons/config.sp"
 #include "weapons/menus.sp"
+#include "weapons/natives.sp"
+
+//#define DEBUG
 
 public Plugin myinfo = 
 {
 	name = "Weapons & Knives",
 	author = "kgns | oyunhost.net",
 	description = "All in one weapon skin management",
-	version = "1.6.0",
+	version = "1.7.0",
 	url = "https://www.oyunhost.net"
 };
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	RegPluginLibrary("weapons");
+
+	CreateNative("Weapons_SetClientKnife", Weapons_SetClientKnife_Native);
+	CreateNative("Weapons_GetClientKnife", Weapons_GetClientKnife_Native);
+	
+	g_hOnKnifeSelect_Pre = CreateGlobalForward("Weapons_OnClientKnifeSelectPre", ET_Event, Param_Cell, Param_Cell, Param_String);
+	g_hOnKnifeSelect_Post = CreateGlobalForward("Weapons_OnClientKnifeSelectPost", ET_Ignore, Param_Cell, Param_Cell, Param_String);
+	return APLRes_Success;
+}
 
 public void OnPluginStart()
 {
@@ -60,17 +76,16 @@ public void OnPluginStart()
 	LoadTranslations("weapons.phrases");
 	
 	g_Cvar_DBConnection 			= CreateConVar("sm_weapons_db_connection", 			"storage-local", 	"Database connection name in databases.cfg to use");
-	g_Cvar_TablePrefix 				= CreateConVar("sm_weapons_table_prefix", 			"", 				"Prefix for database table (example: 'xyz_')");
-	g_Cvar_ChatPrefix 				= CreateConVar("sm_weapons_chat_prefix", 			"[oyunhost.net]", 	"Prefix for chat messages");
+	g_Cvar_TablePrefix 			= CreateConVar("sm_weapons_table_prefix", 			"", 				"Prefix for database table (example: 'xyz_')");
+	g_Cvar_ChatPrefix 			= CreateConVar("sm_weapons_chat_prefix", 			"[oyunhost.net]", 	"Prefix for chat messages");
 	g_Cvar_KnifeStatTrakMode 		= CreateConVar("sm_weapons_knife_stattrak_mode", 	"0", 				"0: All knives show the same StatTrak counter (total knife kills) 1: Each type of knife shows its own separate StatTrak counter");
-	g_Cvar_EnableFloat 				= CreateConVar("sm_weapons_enable_float", 			"1", 				"Enable/Disable weapon float options");
+	g_Cvar_EnableFloat 			= CreateConVar("sm_weapons_enable_float", 			"1", 				"Enable/Disable weapon float options");
 	g_Cvar_EnableNameTag 			= CreateConVar("sm_weapons_enable_nametag", 		"1", 				"Enable/Disable name tag options");
 	g_Cvar_EnableStatTrak 			= CreateConVar("sm_weapons_enable_stattrak", 		"1", 				"Enable/Disable StatTrak options");
-	g_Cvar_EnableAllSkins			= CreateConVar("sm_weapons_enable_allskins",		"1",				"Enable/Disable All Skins options");
 	g_Cvar_EnableSeed				= CreateConVar("sm_weapons_enable_seed",			"1",				"Enable/Disable Seed options");
 	g_Cvar_FloatIncrementSize 		= CreateConVar("sm_weapons_float_increment_size", 	"0.05", 			"Increase/Decrease by value for weapon float");
 	g_Cvar_EnableWeaponOverwrite 	= CreateConVar("sm_weapons_enable_overwrite", 		"1", 				"Enable/Disable players overwriting other players' weapons (picked up from the ground) by using !ws command");
-	g_Cvar_GracePeriod 				= CreateConVar("sm_weapons_grace_period", 			"0", 				"Grace period in terms of seconds counted after round start for allowing the use of !ws command. 0 means no restrictions");
+	g_Cvar_GracePeriod 			= CreateConVar("sm_weapons_grace_period", 			"0", 				"Grace period in terms of seconds counted after round start for allowing the use of !ws command. 0 means no restrictions");
 	g_Cvar_InactiveDays 			= CreateConVar("sm_weapons_inactive_days", 			"30", 				"Number of days before a player (SteamID) is marked as inactive and his data is deleted. (0 or any negative value to disable deleting)");
 	
 	AutoExecConfig(true, "weapons");
@@ -97,7 +112,68 @@ public void OnPluginStart()
 	AddCommandListener(ChatListener, "say");
 	AddCommandListener(ChatListener, "say2");
 	AddCommandListener(ChatListener, "say_team");
+
+	#if defined DEBUG
+	RegAdminCmd("sm_setknife", Command_SetKnife, ADMFLAG_ROOT, "Sets knife of specific player.");
+	RegAdminCmd("sm_getknife", Command_GetClientKnife, ADMFLAG_ROOT, "Gets specific player's knife class name.");
+	#endif
+	
+	for(int i = 0; i < sizeof(g_iWeaponSeed); i++)
+	{
+		for(int j = 0; j < sizeof(g_iWeaponSeed[]); j++)
+		{
+			g_iWeaponSeed[i][j] = -1;
+		}
+	}
 }
+
+#if defined DEBUG
+public Action Command_SetKnife(int client, int args)
+{
+	if(args != 2)
+	{
+		ReplyToCommand(client, "[SM] Usage: sm_setknife <playername> <weaponname>");
+		return Plugin_Handled;
+	}
+	char buffer[64];
+	GetCmdArg(1, buffer, sizeof(buffer));
+	int target = FindTarget(client, buffer);
+	if(target == -1)
+	{
+		ReplyToCommand(client, "[SM] Please enter valid playername!");
+		return Plugin_Handled;
+	}
+	GetCmdArg(2, buffer, sizeof(buffer));
+	if(SetClientKnife(target, buffer) == -1)
+	{
+		ReplyToCommand(client, "[SM] Knife %s is not valid.", buffer);
+		return Plugin_Handled;
+	}
+	ReplyToCommand(client, "[SM] Successfully set %N's knife.", target);
+	return Plugin_Handled;
+}
+
+public Action Command_GetClientKnife(int client, int args)
+{
+	if(args != 1)
+	{
+		ReplyToCommand(client, "[SM] Usage: sm_getknife <playername>");
+		return Plugin_Handled;
+	}
+	char buffer[32];
+	GetCmdArg(1, buffer, sizeof(buffer));
+	int target = FindTarget(client, buffer);
+	if(target == -1)
+	{
+		ReplyToCommand(client, "[SM] Please enter valid playername!");
+		return Plugin_Handled;
+	}
+	char sKnife[64];
+	GetClientKnife(client, sKnife, sizeof(sKnife));
+	ReplyToCommand(client, "[SM] %N's knife is %s.", target, sKnife);
+	return Plugin_Handled;
+}
+#endif
 
 public Action CommandWeaponSkins(int client, int args)
 {
@@ -212,7 +288,7 @@ void SetWeaponProps(int client, int entity)
 		{
 			SetEntDataString(entity, FindSendPropInfo("CBaseAttributableItem", "m_szCustomName"), g_NameTag[client][index], 128);
 		}
-		SetEntProp(entity, Prop_Send, "m_iAccountID", g_iSteam32[client]);
+		SetEntProp(entity, Prop_Send, "m_iAccountID", GetSteamAccountID(client));
 		SetEntPropEnt(entity, Prop_Send, "m_hOwnerEntity", client);
 		SetEntPropEnt(entity, Prop_Send, "m_hPrevOwner", -1);
 	}
