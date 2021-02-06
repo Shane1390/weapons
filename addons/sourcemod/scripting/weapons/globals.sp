@@ -90,6 +90,7 @@ char g_NameTag[MAXPLAYERS+1][sizeof(g_WeaponClasses)][128];
 float g_fFloatValue[MAXPLAYERS+1][sizeof(g_WeaponClasses)];
 
 int g_iIndex[MAXPLAYERS+1] = { 0, ... };
+int g_iSkinIndex[MAXPLAYERS + 1] = { 0, ... };
 Handle g_FloatTimer[MAXPLAYERS+1] = { INVALID_HANDLE, ... };
 
 bool g_bWaitingForNametag[MAXPLAYERS+1] = { false, ... };
